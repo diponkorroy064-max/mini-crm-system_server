@@ -6,7 +6,14 @@ const task_service_1 = require("../services/task.service");
 const create = async (req, res) => {
     try {
         const data = task_validation_1.createTaskSchema.parse(req.body);
-        const task = await (0, task_service_1.createTask)(data, req.user.id);
+        const user = req.user;
+        if (!user) {
+            return res.status(401).json({
+                success: false,
+                message: "Unauthorized",
+            });
+        }
+        const task = await (0, task_service_1.createTask)(data, user.id);
         res.status(201).json({
             success: true,
             message: "Task created successfully",
@@ -94,7 +101,14 @@ const remove = async (req, res) => {
 exports.remove = remove;
 const myTasks = async (req, res) => {
     try {
-        const tasks = await (0, task_service_1.getMyTasks)(req.user.id);
+        const user = req.user;
+        if (!user) {
+            return res.status(401).json({
+                success: false,
+                message: "Unauthorized",
+            });
+        }
+        const tasks = await (0, task_service_1.getMyTasks)(user.id);
         res.status(200).json({
             success: true,
             data: tasks,
