@@ -1,10 +1,6 @@
 import { Request, Response, NextFunction } from "express";
-import jwt, { JwtPayload } from "jsonwebtoken";
+import jwt from "jsonwebtoken";
 
-
-// export interface AuthRequest extends Request {
-//     user?: JwtPayload | string;
-// }
 
 interface UserPayload {
     id: number;
@@ -12,9 +8,9 @@ interface UserPayload {
     role: string;
 }
 
-// export interface AuthRequest extends Request {
-//     user: UserPayload;
-// }
+export interface AuthRequest extends Request {
+    user: UserPayload;
+}
 
 export const verifyToken = (
     req: Request,
