@@ -1,9 +1,5 @@
 import { Request, Response } from "express";
-import { AuthRequest } from "../middleware/auth.middleware";
-
-import {
-    createTaskSchema,
-} from "../validations/task.validation";
+import { createTaskSchema} from "../validations/task.validation";
 
 import {
     createTask,
@@ -16,16 +12,22 @@ import {
 
 
 export const create = async (
-    req: AuthRequest,
+    req: Request,
     res: Response
 ) => {
     try {
         const data = createTaskSchema.parse(req.body);
 
-        const task = await createTask(
-            data,
-            req.user.id
-        );
+        const user = req.user;
+
+        if (!user) {
+            return res.status(401).json({
+                success: false,
+                message: "Unauthorized",
+            });
+        }
+
+        const task = await createTask(data, user.id);
 
         res.status(201).json({
             success: true,
@@ -136,13 +138,20 @@ export const remove = async (
 
 
 export const myTasks = async (
-    req: AuthRequest,
+    req: Request,
     res: Response
 ) => {
     try {
-        const tasks = await getMyTasks(
-            req.user.id
-        );
+        const user = req.user;
+
+        if (!user) {
+            return res.status(401).json({
+                success: false,
+                message: "Unauthorized",
+            });
+        }
+
+        const tasks = await getMyTasks(user.id);
 
         res.status(200).json({
             success: true,

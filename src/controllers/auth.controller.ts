@@ -3,8 +3,6 @@ import { registerSchema } from "../validations/auth.validation";
 import { registerUser } from "../services/auth.service";
 import { loginSchema } from "../validations/auth.validation";
 import { loginUser } from "../services/auth.service";
-import { AuthRequest } from "../middleware/auth.middleware";
-
 
 export const register = async (
     req: Request,
@@ -57,7 +55,7 @@ export const login = async (
 
 
 export const getProfile = async (
-    req: AuthRequest,
+    req: Request,
     res: Response
 ) => {
     try {

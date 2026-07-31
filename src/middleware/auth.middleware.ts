@@ -1,15 +1,10 @@
 import { Request, Response, NextFunction } from "express";
 import jwt from "jsonwebtoken";
 
-
 interface UserPayload {
     id: number;
     email: string;
     role: string;
-}
-
-export interface AuthRequest extends Request {
-    user: UserPayload;
 }
 
 export const verifyToken = (
