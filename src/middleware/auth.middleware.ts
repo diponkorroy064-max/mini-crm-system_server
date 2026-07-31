@@ -2,45 +2,58 @@ import { Request, Response, NextFunction } from "express";
 import jwt, { JwtPayload } from "jsonwebtoken";
 
 
-export interface AuthRequest extends Request {
-    user?: JwtPayload | string;
+// export interface AuthRequest extends Request {
+//     user?: JwtPayload | string;
+// }
+
+interface UserPayload {
+    id: number;
+    email: string;
+    role: string;
 }
+
+// export interface AuthRequest extends Request {
+//     user: UserPayload;
+// }
 
 export const verifyToken = (
     req: Request,
     res: Response,
-    next: NextFunction
-) => {
+    next: NextFunction): void => {
     const authHeader = req.headers.authorization;
 
     if (!authHeader) {
-        return res.status(401).json({
+        res.status(401).json({
             success: false,
             message: "Unauthorized",
         });
+        return;
     }
 
     const token = authHeader.split(" ")[1];
 
     if (!token) {
-        return res.status(401).json({
+        res.status(401).json({
             success: false,
             message: "Invalid token format.",
         });
+        return;
     }
 
     try {
         const decoded = jwt.verify(
             token,
             process.env.JWT_SECRET as string
-        );
-        (req as any).user = decoded;
+        ) as UserPayload;
+
+        req.user = decoded;
         next();
     } catch {
-        return res.status(401).json({
+        res.status(401).json({
             success: false,
             message: "Invalid or expired token.",
         });
+        return;
     }
 };
 
