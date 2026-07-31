@@ -1,6 +1,6 @@
 # Mini CRM System - Server
 
-A robust RESTful API built with **Node.js**, **Express.js**, **TypeScript**, **Prisma ORM**, and **PostgreSQL**. This backend powers the Mini CRM System by providing secure authentication, role-based authorization, and APIs for managing customers, leads, and tasks.
+A robust RESTful API built with **Node.js**, **Express.js**, **TypeScript**, **Prisma ORM**, and **MySQL**. This backend powers the Mini CRM System by providing secure authentication, role-based authorization, and APIs for managing customers, leads, and tasks.
 
 ---
 
