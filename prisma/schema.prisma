@@ -24,6 +24,26 @@ enum Priority {
   HIGH
 }
 
+enum LeadStatus {
+  NEW
+  CONTACTED
+  QUALIFIED
+  PROPOSAL_SENT
+  WON
+  LOST
+}
+
+enum LeadSource {
+  WEBSITE
+  FACEBOOK
+  INSTAGRAM
+  LINKEDIN
+  REFERRAL
+  PHONE
+  EMAIL
+  OTHER
+}
+
 model User {
   id        Int      @id @default(autoincrement())
   name      String
@@ -34,10 +54,15 @@ model User {
   createdAt DateTime @default(now())
   updatedAt DateTime @updatedAt
 
-  // Relations
+  // Task Relations
   createdTasks Task[] @relation("CreatedTasks")
   assignedTasks Task[] @relation("AssignedTasks")
+
+  // Lead Relations
+  createdLeads Lead[] @relation("CreatedLeads")
+  assignedLeads Lead[] @relation("AssignedLeads")
 }
+
 
 model Task {
   id          Int         @id @default(autoincrement())
@@ -56,6 +81,32 @@ model Task {
   // Staff assigned to the task
   assignedToId Int?
   assignedTo   User? @relation("AssignedTasks", fields: [assignedToId], references: [id])
+
+  createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt
+}
+
+
+model Lead {
+  id           Int          @id @default(autoincrement())
+
+  customerName String
+  email        String
+  phone        String
+  company      String?
+
+  source        LeadSource
+  status        LeadStatus @default(NEW)
+
+  notes         String?
+
+  // Admin who created the lead
+  createdById   Int
+  createdBy     User @relation("CreatedLeads", fields: [createdById], references: [id])
+
+  // Staff assigned to the lead
+  assignedToId  Int?
+  assignedTo    User? @relation("AssignedLeads", fields: [assignedToId], references: [id])
 
   createdAt DateTime @default(now())
   updatedAt DateTime @updatedAt
