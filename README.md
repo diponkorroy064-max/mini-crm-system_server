@@ -9,7 +9,7 @@ A robust RESTful API built with **Node.js**, **Express.js**, **TypeScript**, **P
 **Server URL**
 
 ```
-https://your-server-url.vercel.app
+https://mini-crm-systemserver.vercel.app
 ```
 
 ---
@@ -68,7 +68,7 @@ https://your-server-url.vercel.app
 
 ## Database
 
-- PostgreSQL
+- MySQL
 - Prisma ORM
 - Relations
 - Foreign Keys
@@ -91,7 +91,7 @@ https://your-server-url.vercel.app
 - Express.js
 - TypeScript
 - Prisma ORM
-- PostgreSQL
+- MySQL
 - JWT
 - bcrypt
 - Zod
@@ -134,7 +134,7 @@ src
 Clone the repository
 
 ```bash
-git clone https://github.com/your-username/mini-crm-server.git
+git clone https://github.com/diponkorroy064-max/mini-crm-system_server
 ```
 
 Go to the server directory
@@ -158,13 +158,11 @@ Create a `.env` file in the root directory.
 ```env
 PORT=8000
 
-DATABASE_URL="postgresql://username:password@localhost:5432/mini_crm"
+DATABASE_URL="mysql://root:diponkor26@localhost:3306/mini_crm_db"
 
-JWT_SECRET=your_jwt_secret
+JWT_SECRET=JWT_SECRET="mini_crm_secret_key"
 
 JWT_EXPIRES_IN=7d
-
-NODE_ENV=development
 ```
 
 ---
@@ -379,7 +377,7 @@ https://github.com/diponkorroy064-max
 Portfolio
 
 ```
-https://your-portfolio-url.vercel.app
+https://portfolio-ashy-six-68.vercel.app
 ```
 
 ---
