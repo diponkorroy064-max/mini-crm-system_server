@@ -1,32 +1,12 @@
-import prisma from "../config/prisma";
-
-interface CreateLeadInput {
-    customerName: string;
-    email: string;
-    phone: string;
-    company?: string;
-    source: any;
-    status?: any;
-    notes?: string;
-    assignedToId?: number;
-}
-
-interface UpdateLeadInput {
-    customerName?: string;
-    email?: string;
-    phone?: string;
-    company?: string;
-    source?: any;
-    status?: any;
-    notes?: string;
-    assignedToId?: number;
-}
-
-export const createLead = async (
-    data: CreateLeadInput,
-    adminId: number
-) => {
-    return await prisma.lead.create({
+"use strict";
+var __importDefault = (this && this.__importDefault) || function (mod) {
+    return (mod && mod.__esModule) ? mod : { "default": mod };
+};
+Object.defineProperty(exports, "__esModule", { value: true });
+exports.deleteLead = exports.updateLead = exports.getLeadById = exports.getLeads = exports.createLead = void 0;
+const prisma_1 = __importDefault(require("../config/prisma"));
+const createLead = async (data, adminId) => {
+    return await prisma_1.default.lead.create({
         data: {
             customerName: data.customerName,
             email: data.email,
@@ -35,13 +15,11 @@ export const createLead = async (
             source: data.source,
             status: data.status ?? "NEW",
             notes: data.notes,
-
             createdBy: {
                 connect: {
                     id: adminId,
                 },
             },
-
             ...(data.assignedToId && {
                 assignedTo: {
                     connect: {
@@ -50,61 +28,50 @@ export const createLead = async (
                 },
             }),
         },
-
         include: {
             createdBy: true,
             assignedTo: true,
         },
     });
 };
-
-export const getLeads = async () => {
-    return await prisma.lead.findMany({
+exports.createLead = createLead;
+const getLeads = async () => {
+    return await prisma_1.default.lead.findMany({
         include: {
             createdBy: true,
             assignedTo: true,
         },
-
         orderBy: {
             createdAt: "desc",
         },
     });
 };
-
-export const getLeadById = async (
-    id: number
-) => {
-    return await prisma.lead.findUnique({
+exports.getLeads = getLeads;
+const getLeadById = async (id) => {
+    return await prisma_1.default.lead.findUnique({
         where: { id },
-
         include: {
             createdBy: true,
             assignedTo: true,
         },
     });
 };
-
-
-export const updateLead = async (
-    id: number,
-    data: UpdateLeadInput
-) => {
-    return await prisma.lead.update({
+exports.getLeadById = getLeadById;
+const updateLead = async (id, data) => {
+    return await prisma_1.default.lead.update({
         where: { id },
-
         data,
-
         include: {
             createdBy: true,
             assignedTo: true,
         },
     });
 };
-
-export const deleteLead = async (
-    id: number
-) => {
-    return await prisma.lead.delete({
+exports.updateLead = updateLead;
+const deleteLead = async (id) => {
+    return await prisma_1.default.lead.delete({
         where: { id },
     });
 };
+exports.deleteLead = deleteLead;
+//# sourceMappingURL=lead.service.js.map
