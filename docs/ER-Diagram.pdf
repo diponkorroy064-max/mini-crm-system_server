@@ -1,0 +1,118 @@
+ER Diagram:
+
+                        +----------------------+
+                        |        User          |
+                        +----------------------+
+                        | id (PK)              |
+                        | name                 |
+                        | email (Unique)       |
+                        | password             |
+                        | role                 |
+                        | createdAt            |
+                        | updatedAt            |
+                        +----------------------+
+                           ▲              ▲
+                           │              │
+              createdById  │              │ assignedToId
+                           │              │
+                           │              │
+                  +--------+--------------+--------+
+                  |                               |
+                  |            Task               |
+                  +-------------------------------+
+                  | id (PK)                       |
+                  | title                         |
+                  | description                   |
+                  | status                        |
+                  | priority                      |
+                  | dueDate                       |
+                  | createdById (FK → User.id)    |
+                  | assignedToId (FK → User.id)   |
+                  | createdAt                     |
+                  | updatedAt                     |
+                  +-------------------------------+
+
+
+Relationship:-
+
+| Table | Relationship | Table               |
+| ----- | ------------ | ------------------- |
+| User  | 1 → Many     | Task (createdById)  |
+| User  | 1 → Many     | Task (assignedToId) |
+
+
+
+
+Database Structure:-
+
+| Field     | Type            |
+| --------- | --------------- |
+| id        | Int (PK)        |
+| name      | String          |
+| email     | String (Unique) |
+| password  | String          |
+| role      | ADMIN / STAFF   |
+| createdAt | DateTime        |
+| updatedAt | DateTime        |
+-------------------------------
+
+
+
+
+Task:-
+
+| Field        | Type                              |
+| ------------ | --------------------------------- |
+| id           | Int (PK)                          |
+| title        | String                            |
+| description  | String                            |
+| status       | PENDING / IN_PROGRESS / COMPLETED |
+| priority     | LOW / MEDIUM / HIGH               |
+| dueDate      | DateTime                          |
+| createdById  | Int (FK)                          |
+| assignedToId | Int (FK)                          |
+| createdAt    | DateTime                          |
+| updatedAt    | DateTime                          |
+
+
+
+
+
+Professional ER Diagram (for PDF):-
+
+                    ┌───────────────────────┐
+                    │         USER          │
+                    ├───────────────────────┤
+                    │ PK  id                │
+                    │     name              │
+                    │     email             │
+                    │     password          │
+                    │     role              │
+                    │     createdAt         │
+                    │     updatedAt         │
+                    └──────────┬────────────┘
+                               │
+              creates (1:N)    │    assigned (1:N)
+                               │
+                ┌──────────────┴──────────────┐
+                │                             │
+                ▼                             ▼
+         createdById                    assignedToId
+                ┌─────────────────────────────────┐
+                │              TASK               │
+                ├─────────────────────────────────┤
+                │ PK  id                          │
+                │     title                       │
+                │     description                 │
+                │     priority                    │
+                │     status                      │
+                │     dueDate                     │
+                │ FK  createdById                 │
+                │ FK  assignedToId                │
+                │     createdAt                   │
+                │     updatedAt                   │
+                └─────────────────────────────────┘
+
+
+
+
